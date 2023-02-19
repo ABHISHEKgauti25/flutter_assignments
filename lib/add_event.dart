@@ -12,9 +12,9 @@ class _NewEventScreen extends State<NewEventScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF978CDB),
+      backgroundColor: const Color(0xFF7260BB),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF4B39B9),
+        backgroundColor: const Color(0xFF4C3E85),
         title: const Text('New Event'),
         centerTitle: false,
       ),
@@ -35,10 +35,10 @@ class _NewEventScreen extends State<NewEventScreen> {
                   child: TextField(
                     style: const TextStyle(color: Colors.white),
                     maxLines: null,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       label: Text('Event',
-                          style: const TextStyle(color: Colors.white70, fontWeight: FontWeight.bold)),
-                          icon: const Icon(
+                          style: TextStyle(color: Colors.white70, fontWeight: FontWeight.bold)),
+                          icon: Icon(
                           Icons.calendar_month,
                           color: Colors.white,
                           size: 30,
@@ -66,7 +66,15 @@ class _NewEventScreen extends State<NewEventScreen> {
                   ),
                   onPressed: () {
                     String neweventText = _textEditingController.text;
+                    if (neweventText != "") {
+                      Navigator.of(context).pop(neweventText);
+                    }
+                    else {
+                      Navigator.pop(context);
+                    }
+
                     Navigator.of(context).pop(neweventText);
+
                   },
                   child: const Text('ADD'),
                 ),

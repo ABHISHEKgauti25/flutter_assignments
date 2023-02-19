@@ -18,45 +18,59 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: const Color(0xFF978CDB),
+        backgroundColor: const Color(0xFF7260BB),
         appBar: AppBar(
-          backgroundColor: const Color(0xFF4B39B9),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15)
+          ),
+          backgroundColor: const Color(0xFF4C3E85),
           title: const Text('Event Scheduler'),
-          centerTitle: false,
+          centerTitle: true,
         ),
-        floatingActionButton: Builder(
-          builder: (context) {
-            return FloatingActionButton(
-              backgroundColor: const Color(0xFF4B39B9),
-              child: const Icon(Icons.add),
-              onPressed: () async {
-                String newEvent = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => NewEventScreen()));
-                setState(() {
-                  _list.add(Text(newEvent,textAlign: TextAlign.center,));
-                });
-                },
-            );
-          }
-        ),
-        body: ListView.builder(
-            itemCount: _list.length,
-            itemBuilder: (context,index) =>
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 8),
-                  child: Container(
-                    alignment: Alignment.center,
-                    width: 400,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: _list[index],
+        floatingActionButton: Builder(builder: (context) {
+          return FloatingActionButton(
+            backgroundColor: const Color(0xFF4C3E85),
+            child: const Icon(Icons.add),
+            onPressed: () async {
+              String newEvent = await Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (context) => const NewEventScreen()));
+              setState(() {
+                _list.insert(0,
+                    Text(newEvent,)
+                );
+              });
+            },
+          );
+        }),
+        body:ListView.builder(
+          itemCount: _list.length,
+          itemBuilder: (context, index) => Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+            child: ListTile(
+              contentPadding: const EdgeInsets.symmetric(vertical: 20,horizontal: 20),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+              tileColor: const Color(0xFF4C3E85),
+              textColor: Colors.white,
+              title: _list[index],
+              leading: const Icon(Icons.circle,color: Colors.white60,),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    color: Colors.white60,
+                    icon: const Icon(Icons.delete),
+                    onPressed: (){
+                      setState(() {
+                        _list.removeAt(index);
+                      });
+                    } ,
                   ),
-                ),
+                ],
               ),
             ),
+          ),
+        ),
       ),
     );
   }
